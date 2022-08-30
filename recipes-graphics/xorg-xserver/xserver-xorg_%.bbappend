@@ -3,7 +3,8 @@
 
 DEPENDS:append = " automake-native autoconf-native util-macros-native font-util-native xtrans-native libxshmfence rockchip-librga"
 
-SRCREV = "${AUTOREV}"
+SRCREV ?= "${AUTOREV}"
+SRCREV:firefly-rv1126-jd4 = "ee31265ad72edb0195b4b7c4a7a1fb5593093f3a"
 SRC_URI:append = " git://github.com/JeffyCN/xorg-xserver;protocol=https;nobranch=1;branch=${PV}_2022_08_09;"
 SRC_URI:remove = "https://www.x.org/releases//individual/xserver/xorg-server-${PV}.tar.bz2"
 S = "${WORKDIR}/git"
