@@ -59,7 +59,7 @@ RDEPENDS:${KERNEL_PACKAGE_NAME}-base = ""
 IMAGE_FSTYPES:remove = "iso live"
 export RK_ROOTFS_TYPE ?= "ext4"
 
-IMAGE_FSTYPES:append = " ${RK_ROOTFS_TYPE} wic"
+IMAGE_FSTYPES:append = " ${RK_ROOTFS_TYPE} wic wic.bmap"
 WKS_FILE ?= "generic-gptdisk.wks.in"
 
 # Some partitons, e.g. trust, are allowed to be optional.
