@@ -34,13 +34,13 @@ do_configure:prepend() {
 	done
 
 	# Support python3
-	sed -i -e 's/\(open(.*[^"]\))/\1, "rb")/' -e 's/,$//' \
-		-e 's/print >> \([^,]*\), *\(.*\)$/print(\2, file=\1)/' \
+	sed -i -e 's/\(open([^,]*\))/\1, "rb")/' \
+		-e 's/print >> \([^,]*\), *\(.*\),*$/print(\2, file=\1)/' \
 		-e 's/print \(.*\)$/print(\1)/' \
 		${S}/arch/arm/mach-rockchip/make_fit_atf.py
 
 	# Remove unneeded stages from make.sh
-	sed -i -e '/^select_tool/d' -e '/^clean/d' -e '/^\t*make/d' ${S}/make.sh
+	sed -i -e '/^select_tool/d' -e '/^clean/d' -e '/^\t*make/d' -e '/which python2/{n;n;s/exit 1/true/}' ${S}/make.sh
 
 	if [ "x${RK_ALLOW_PREBUILT_UBOOT}" = "x1" ]; then
 		# Copy prebuilt images

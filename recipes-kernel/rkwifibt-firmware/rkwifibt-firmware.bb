@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://${RKBASE}/licenses/LICENSE.rockchip;md5=d63890e209bf0
 
 inherit freeze-rev local-git
 
-SRCREV = "983d6c05097db78f514443adc41761dd9cfbb352"
+SRCREV = "54d05e00e73a91c14c86005e86fff45fa094203e"
 SRC_URI = "git://github.com/JeffyCN/mirrors.git;protocol=https;branch=rkwifibt;"
 
 S = "${WORKDIR}/git"
@@ -17,11 +17,10 @@ S = "${WORKDIR}/git"
 inherit allarch deploy
 
 do_install() {
-	install -d ${D}/lib/firmware/
-	install -m 0644 ${S}/firmware/broadcom/all/*/* -t ${D}/lib/firmware/
-
 	install -d ${D}/lib/firmware/rtlbt/
-	install -m 0644 ${S}/realtek/RTL*/* -t ${D}/lib/firmware/rtlbt/
+
+	cp -u $(find ${S}/firmware/ -type f) ${D}/lib/firmware/
+	ln -rsf ${D}/lib/firmware/*rtl*_* ${D}/lib/firmware/rtlbt/
 }
 
 PACKAGES =+ " \
@@ -33,7 +32,8 @@ PACKAGES =+ " \
 	${PN}-ap6255-wifi \
 	${PN}-ap6255-bt \
 	${PN}-ap6275p-wifi \
-	${PN}-ap6275p-bt \
+	${PN}-ap6275s-wifi \
+	${PN}-ap6275-bt \
 	${PN}-ap6354-wifi \
 	${PN}-ap6354-bt \
 	${PN}-ap6356-wifi \
@@ -83,7 +83,14 @@ FILES:${PN}-ap6275p-wifi = " \
 	lib/firmware/fw_bcm43752a2_pcie_ag.bin \
 	lib/firmware/nvram_AP6275P.txt \
 "
-FILES:${PN}-ap6275p-bt = " \
+FILES:${PN}-ap6275s-wifi = " \
+	lib/firmware/fw_bcm43752a2_ag_apsta.bin \
+	lib/firmware/fw_bcm43752a2_ag_mfg.bin \
+	lib/firmware/clm_bcm43752a2_ag.blob \
+	lib/firmware/fw_bcm43752a2_ag.bin \
+	lib/firmware/nvram_ap6275s.txt \
+"
+FILES:${PN}-ap6275-bt = " \
 	lib/firmware/BCM4362A2.hcd \
 "
 
